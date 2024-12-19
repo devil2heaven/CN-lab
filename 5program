@@ -1,3 +1,4 @@
+lst=[]
 def sliding_window(elements, window_size):      #function definition of sliding window 
     if len(elements) <= window_size:
         return elements
