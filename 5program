@@ -1,0 +1,15 @@
+def sliding_window(elements, window_size):      #function definition of sliding window 
+    if len(elements) <= window_size:
+        return elements
+    for i in range(len(elements)):
+         print(elements[i:i+window_size])
+n = int(input("Enter number of elements :"))  # number of elements as input
+print("Enter the elements : ")
+# iterating till the range
+for i in range(0, n):
+    ele = int(input())
+    lst.append(ele)   # adding the element
+print(lst)  #print the list elements to be sent on the sender
+m = int(input("Enter THE WINDOW SIZE: "))  # enter the window size
+print("The sliding protocol output is ")
+sliding_window(lst, m)
