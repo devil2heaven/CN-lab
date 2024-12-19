@@ -1,0 +1,25 @@
+storage = 0
+# total no. of times bucket content is checke
+no_of_ticks=int(input("enter no_of_ticks for which the buckets will be filled  ")) 
+# total no. of packets that can  accommodated in the bucket
+bucket_size = int(input("enter bucket size input_pkt_size "))
+input_pkt_size = int(input("enter no. of packets that are inflowed per second  "))
+# no. of packets that exits the bucket at a time
+output_pkt_size=int(input("enter the outflow rate  "))
+#output_pkt_size = 1
+print("total bucket size is ", bucket_size)
+for i in range(0, no_of_ticks):  
+    print("At time ", i+1)
+    size_left = bucket_size - storage
+    if input_pkt_size <= size_left :
+      # update storage
+        storage += input_pkt_size
+    else:
+        droped= input_pkt_size-size_left 
+        print("Packet loss = ", droped)
+        storage += 1
+        size_left=0
+    print(f"total packets in bucket is= {storage} and remaining bucket capacity is = {size_left}")
+    # as packets are sent out into the network, the size of the storage decreases
+    storage -= output_pkt_size
+    print(f"packets remaining in bucket after one packet is outflowed= {storage}")
