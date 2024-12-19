@@ -1,0 +1,54 @@
+def get_input(prompt):
+    while True:
+        user_input = input(prompt)
+        if all(bit in '01' for bit in user_input):
+            return user_input
+        print("Invalid input. Please enter only 0s and 1s.")
+
+
+def calculate_crc(message, generator):
+    data = list(map(int, message)) + [0] * (len(generator) - 1)
+    divisor = list(map(int, generator))
+
+    # Perform CRC calculation
+    for i in range(len(message)):
+        if data[i] == 1:
+            for j in range(len(divisor)):
+                data[i + j] ^= divisor[j]
+
+    # Generate the final message with checksum
+    checksum = message + ''.join(map(str, data[len(message):]))
+    return checksum
+
+
+def validate_crc(received_message, generator):
+    data = list(map(int, received_message)) + [0] * (len(generator) - 1)
+    divisor = list(map(int, generator))
+
+    # Perform CRC calculation for validation
+    for i in range(len(received_message)):
+        if data[i] == 1:
+            for j in range(len(divisor)):
+                data[i + j] ^= divisor[j]
+
+    # Check for validity
+    return all(bit == 0 for bit in data)
+
+
+def main():
+    # Input message bits and generator
+    message = get_input("Enter message bits (only 0s and 1s): ")
+    generator = get_input("Enter generator (only 0s and 1s): ")
+
+    # Calculate and display the checksum
+    checksum = calculate_crc(message, generator)
+    print("The checksum code is:", checksum)
+
+    # Check for input CRC code
+    received_message = get_input("Enter checksum code (message + checksum): ")
+    is_valid = validate_crc(received_message, generator)
+    print("Data stream is valid" if is_valid else "Data stream is invalid. CRC error occurred.")
+
+
+if __name__ == "__main__":
+    main()
